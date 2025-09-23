@@ -2,7 +2,7 @@
 
 一个基于 ESP32 和电子墨水屏的 Strava 运动数据显示器，通过 WiFi 连接获取 Strava 运动数据并显示在电子墨水屏上。
 
-<b>需要有服务端通过STRAVA API获取数据,墨水屏不直接从STRAVA获取数据<b>
+<b>需要有服务端通过STRAVA API获取数据进行转发,墨水屏不直接从STRAVA获取数据<b>
 
 ## 项目介绍
 
