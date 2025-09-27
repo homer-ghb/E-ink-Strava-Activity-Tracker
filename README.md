@@ -2,17 +2,20 @@
 
 一个基于 ESP32 和电子墨水屏的 Strava 运动数据显示器，通过 WiFi 连接获取 Strava 运动数据并显示在电子墨水屏上。
 
-<b>需要有服务端通过STRAVA API获取数据进行转发,墨水屏不直接从STRAVA获取数据<b>
-
 ## 项目介绍
 
-本项目是一个智能 Strava 数据墨水屏显示器，具有以下功能：
+本项目是一个智能 Strava 数据显示器，具有以下功能：
 
 - 📊 **年度骑行数据统计**：显示当前年度总骑行距离和完成进度
 - 🏆 **个人最佳记录**：展示最大爬升高度和最长骑行距离
 - 🚴 **最近一次骑行**：显示最近一次骑行的详细信息
-- 📱 **智能WiFi配置**：支持BLE WiFi配网方式
+- 🎨 **精美UI设计**：使用电子墨水屏提供低功耗的清晰显示
+- 📱 **智能WiFi配置**：支持BLE和SoftAP两种WiFi配网方式
 - 🔘 **按键交互**：通过按键切换不同显示页面
+
+##STRAVA 数据中转服务
+本设备不直接从STRAVA获取相关数据，需要有通过支持STRAVA API的三方应用在绑定账户后获取数据。
+
 
 ## 硬件选型
 
@@ -22,21 +25,28 @@
 |------|-----------|------|
 | 主控板 | ESP32 | 支持WiFi和BLE的微控制器 |
 | 显示屏 | GxDEPG0213BN | 2.13英寸电子墨水屏，分辨率250x122 |
-| 按键 | 轻触开关 | 用于页面切换 |
 
-## 软件环境配置
+
+## 如何将程序上传到ESP32开发板
+
+LilyGo T5开发板相关的参考资料：https://github.com/Xinyuan-LilyGO/LilyGo-T5-Epaper-Series
+
+
+DFROBOT的2.13墨水屏开发板也是使用的Lilygo T5的开发板，但是DFROBOT提供了更为详细的教程：
+https://wiki.dfrobot.com.cn/SKU_DFR0676_e-ink_Display_Module_for_ESP32
+
 
 ### Arduino IDE 配置
 
 1. **安装 Arduino IDE**
-   - 下载并安装 Arduino IDE (推荐版本 1.8.x 或 2.x)
+   - 下载并安装 Arduino IDE 
 
 2. **添加 ESP32 开发板支持**
    - 打开 Arduino IDE
    - 文件 → 首选项
    - 在"附加开发板管理器网址"中添加：
      ```
-     https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+     https://jihulab.com/esp-mirror/espressif/arduino-esp32/-/raw/gh-pages/package_esp32_index_cn.json
      ```
    - 工具 → 开发板 → 开发板管理器
    - 搜索"ESP32"并安装"ESP32 by Espressif Systems"
@@ -47,16 +57,6 @@
    - `GxEPD` - 电子墨水屏驱动库
    - `ArduinoJson` - JSON解析库
    - `WiFiProv` - WiFi配网库 (通常随ESP32核心库一起安装)
-
-### 开发板设置
-
-在 Arduino IDE 中进行以下设置：
-
-- **开发板**：选择 "ESP32 Dev Module"
-- **端口**：选择正确的COM端口
-- **Flash Size**：设置为 "4MB (32Mb)"
-- **Partition Scheme**：设置为 "Default 4MB with spiffs"
-- **Upload Speed**：设置为 "921600"
 
 ## 烧录程序
 
@@ -71,9 +71,8 @@
 1. 打开 `stravaClientWithUI.ino` 文件
 2. 修改API地址（如果需要）：
    ```cpp
-   const char* serverName = "https://api.uxengineer.top/api/device/a2346ba083c547f7/dashboard-data";
+   const char* serverName = "https://api.uxengineer.top/api/device/#DEVICEID#/dashboard-data";
    ```
-3. 检查引脚配置是否与硬件匹配
 
 ### 3. 编译和上传
 
@@ -84,7 +83,6 @@
 ### 4. 上传注意事项
 
 - 如果上传失败，尝试以下方法：
-  - 按住ESP32的BOOT按钮，然后按一下RESET按钮，再松开BOOT按钮
   - 降低上传波特率到115200
   - 检查USB线是否支持数据传输
 
@@ -108,7 +106,7 @@
    - 开始获取Strava数据并显示
 
 
-### 方法二：代码中直接配置
+### 方法三：代码中直接配置
 
 在 `setup()` 函数中修改WiFi信息：
 
@@ -142,9 +140,6 @@ const char* password = "你的WiFi密码";
    - 平均速度
    - 移动时间
 
-4. **页面4 - 等待骑行**
-   - 显示骑行图标
-   - 提示用户去骑行
 
 ## 故障排除
 
@@ -201,5 +196,7 @@ stravaClientWithUI/
 - 支持多种屏幕型号
 - 实现WiFi配网功能
 - 添加按键交互
+
+---
 
 如有问题或建议，欢迎提交Issue或Pull Request。
