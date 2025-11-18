@@ -71,7 +71,7 @@ https://wiki.dfrobot.com.cn/SKU_DFR0676_e-ink_Display_Module_for_ESP32
 1. 打开 `stravaClientWithUI.ino` 文件
 2. 修改API地址（如果需要）：
    ```cpp
-   const char* serverName = "https://api.uxengineer.top/api/device/#DEVICEID#/dashboard-data";
+   const char* serverName = "YOUR SERVER API";
    ```
 
 ### 3. 编译和上传
